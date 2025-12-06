@@ -1,8 +1,12 @@
 import axios from 'axios';
 
+// Ensure it grabs the Cloud URL, otherwise use empty string (for local proxy)
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+
+// Configure base API path
 const api = axios.create({
-  baseURL: '/api', 
-  withCredentials: true,
+  baseURL: `${BACKEND_URL}/api`, 
+  withCredentials: true, // Must serve cookies
 });
 
 export const getTasks = async () => {
@@ -24,6 +28,7 @@ export const deleteTask = async (id) => {
   const { data } = await api.delete(`/tasks/${id}`);
   return data;
 };
+
 export const updateTask = async ({ id, data }) => {
   const response = await api.put(`/tasks/${id}`, data);
   return response.data;
