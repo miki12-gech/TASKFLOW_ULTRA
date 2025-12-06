@@ -7,7 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Leaderboard from './pages/Leaderboard';
 import CalendarPage from './pages/Calendarpage';
 import Analytics from './pages/Analytics';  
-import Settings from './pages/settings';
+import Settings from './pages/Settings';
 import About from './pages/About';
 import ProtectedRoute from './components/ProtectedRoute';
 
