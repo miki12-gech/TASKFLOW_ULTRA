@@ -9,84 +9,110 @@ const Leaderboard = () => {
     queryFn: getLeaderboardData,
   });
 
-  if (isLoading) return <div className="text-white text-center mt-20 text-xl font-bold">Summoning Champions...</div>;
+  if (isLoading) return <div className="text-blue-600 h-screen flex justify-center items-center font-bold animate-pulse">Summoning Champions...</div>;
 
   return (
-    <div className="w-full max-w-3xl mx-auto min-h-screen p-6">
+    <div className="w-full max-w-4xl mx-auto min-h-screen p-6">
       
       {/* HEADER */}
-      <div className="flex items-center justify-between mb-8">
-        {/* LINK FIXED: Points to Dashboard to avoid Logout */}
-        <Link to="/dashboard" className="text-slate-400 hover:text-white transition-colors flex items-center gap-2 font-bold">
-            <ArrowLeft size={20} /> Back to Command
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+        {/* Return Button */}
+        <Link to="/dashboard" className="bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 px-5 py-3 rounded-2xl flex items-center gap-2 transition-all font-bold shadow-sm hover:shadow-md">
+            <ArrowLeft size={20} className="text-blue-500" />
+            <span>Return to Command</span>
         </Link>
-        <div className="flex items-center gap-2 text-yellow-400">
-            <Trophy size={28} />
-            <h1 className="text-3xl font-black bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent uppercase tracking-wider">
-                Hall of Fame
-            </h1>
+
+        {/* Title */}
+        <div className="flex items-center gap-3">
+            <div className="p-2 bg-yellow-50 rounded-xl border border-yellow-100">
+                <Trophy size={32} className="text-yellow-500 fill-yellow-500" />
+            </div>
+            <div className="text-right">
+                <h1 className="text-3xl font-black text-slate-900 uppercase tracking-tight">Hall of Fame</h1>
+                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Global Ranking</p>
+            </div>
         </div>
       </div>
 
       {/* The List Container */}
-      <div className="bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl">
+      <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl shadow-blue-900/5">
         
-        {users?.map((user, index) => {
-            // Styling logic for Top 3 (High Contrast)
-            let rankIcon;
-            let rankColor = "text-slate-500";
-            let rowBg = "border-b border-slate-800 bg-slate-900";
+        {/* Table Header (Optional, mostly visual) */}
+        <div className="flex justify-between px-8 py-4 bg-slate-50 border-b border-slate-100 text-xs font-bold text-slate-400 uppercase tracking-wider">
+            <span>Rank & Player</span>
+            <span>Total XP Earned</span>
+        </div>
 
+        {users?.map((user, index) => {
+            // Updated Styling Logic for Light Theme
+            let rankIcon;
+            let rankColor = "text-slate-400";
+            let rowBg = "border-b border-slate-50 hover:bg-slate-50"; // Default row style
+
+            // 1st Place (Gold)
             if (index === 0) { 
-                rankIcon = <Crown className="text-yellow-400 fill-yellow-400/20" />; 
-                rankColor = "text-yellow-400 font-bold";
-                rowBg = "bg-yellow-500/10 border-b border-yellow-500/20"; // Gold tint
+                rankIcon = <Crown className="text-yellow-500 fill-yellow-100" />; 
+                rankColor = "text-yellow-600 font-bold";
+                rowBg = "bg-yellow-50/50 border-b border-yellow-100 hover:bg-yellow-50"; 
             }
+            // 2nd Place (Silver)
             else if (index === 1) { 
-                rankIcon = <Medal className="text-slate-300" />; 
-                rankColor = "text-slate-300 font-bold";
-                rowBg = "bg-slate-800 border-b border-slate-700"; // Silver tint
+                rankIcon = <Medal className="text-slate-400 fill-slate-100" />; 
+                rankColor = "text-slate-600 font-bold";
+                rowBg = "bg-slate-50/50 border-b border-slate-100 hover:bg-slate-100"; 
             }
+            // 3rd Place (Bronze)
             else if (index === 2) { 
-                rankIcon = <Medal className="text-orange-400" />; 
-                rankColor = "text-orange-400 font-bold";
-                rowBg = "bg-orange-500/10 border-b border-orange-500/20"; // Bronze tint
+                rankIcon = <Medal className="text-orange-400 fill-orange-100" />; 
+                rankColor = "text-orange-600 font-bold";
+                rowBg = "bg-orange-50/30 border-b border-orange-100 hover:bg-orange-50"; 
             }
+            // Others
             else { 
-                rankIcon = <span className="font-mono font-bold text-lg w-6 text-center">{index + 1}</span>; 
+                rankIcon = <span className="font-mono font-bold text-lg w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 text-sm">{index + 1}</span>; 
             }
 
             return (
-                <div key={user.id} className={`flex items-center justify-between p-5 ${rowBg} hover:bg-white/5 transition-colors group`}>
+                <div key={user.id} className={`flex items-center justify-between p-6 transition-all duration-300 group ${rowBg}`}>
                     
-                    <div className="flex items-center gap-5">
+                    <div className="flex items-center gap-6">
                         <div className={`w-8 flex justify-center scale-110 ${rankColor}`}>
                             {rankIcon}
                         </div>
-                        <div>
+                        
+                        <div className="flex flex-col">
                             <div className="flex items-center gap-3">
+                                {/* Avatar */}
+                                <div className="relative">
+                                    {user.avatar ? (
+                                        <img src={user.avatar} className="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="avatar" />
+                                    ) : (
+                                        <div className="w-10 h-10 rounded-full bg-slate-200" />
+                                    )}
+                                    {/* Small Rank Badge for Top 3 */}
+                                    {index < 3 && <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-yellow-400 border-2 border-white rounded-full"></div>}
+                                </div>
+
                                 {/* User Name */}
-                                <p className={`font-bold text-lg group-hover:text-blue-400 transition-colors ${index < 3 ? 'text-white' : 'text-slate-300'}`}>
+                                <p className={`font-bold text-lg group-hover:text-blue-600 transition-colors ${index < 3 ? 'text-slate-900' : 'text-slate-600'}`}>
                                     {user.name}
                                 </p>
-                                {/* Avatar (Mini) */}
-                                {user.avatar && (
-                                    <img src={user.avatar} className="w-6 h-6 rounded-full border border-slate-600" alt="avatar" />
-                                )}
                             </div>
                             
                             {/* Level Badge */}
-                            <div className="flex items-center gap-2 mt-1">
-                                <span className="text-[10px] text-blue-400 font-mono font-bold bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20 uppercase tracking-wide">
-                                    Level {user.level}
+                            <div className="flex items-center gap-2 mt-1 ml-14">
+                                <span className="text-[10px] text-slate-500 font-bold bg-white px-2 py-0.5 rounded-full border border-slate-200 shadow-sm uppercase tracking-wide">
+                                    LVL <span className="text-blue-500 text-sm">{user.level}</span>
                                 </span>
                             </div>
                         </div>
                     </div>
 
                     <div className="text-right">
-                        <span className={`text-2xl font-black block ${index === 0 ? 'text-yellow-500' : 'text-slate-200'}`}>{user.xp}</span>
-                        <span className="text-slate-600 text-[10px] font-bold tracking-widest uppercase">Experience</span>
+                        <span className={`text-2xl font-black block tracking-tight ${index === 0 ? 'text-yellow-600' : 'text-slate-700'}`}>
+                            {user.xp.toLocaleString()}
+                        </span>
+                        <span className="text-slate-400 text-[10px] font-bold tracking-widest uppercase">XP</span>
                     </div>
 
                 </div>
@@ -94,8 +120,8 @@ const Leaderboard = () => {
         })}
       </div>
 
-      <div className="mt-8 text-center text-slate-600 text-sm font-bold tracking-widest uppercase opacity-60">
-         Compete by completing daily missions
+      <div className="mt-8 text-center">
+         <p className="text-slate-400 text-sm font-medium">Keep completing daily missions to climb the ranks!</p>
       </div>
     </div>
   );

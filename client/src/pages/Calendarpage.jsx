@@ -17,7 +17,7 @@ const CalendarPage = () => {
   const prevMonth = () => setCurrentDate(subMonths(currentDate, 1));
   const nextMonth = () => setCurrentDate(addMonths(currentDate, 1));
 
-  if (isLoading) return <div className="text-white text-center mt-20">Loading Timeline...</div>;
+  if (isLoading) return <div className="text-blue-600 h-screen flex justify-center items-center font-bold animate-pulse">Loading Timeline...</div>;
 
   const getDayStatus = (day) => {
       // Find tasks updated on this day AND completed
@@ -27,54 +27,54 @@ const CalendarPage = () => {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto h-[90vh] flex flex-col p-4">
+    <div className="w-full max-w-5xl mx-auto h-[90vh] flex flex-col p-6">
        
        {/* HEADER */}
        <div className="flex items-center justify-between mb-8">
-            <Link to="/dashboard" className="group flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
-                <ArrowLeft className="group-hover:-translate-x-1 transition-transform" /> Back
+            <Link to="/dashboard" className="bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 px-5 py-3 rounded-2xl flex items-center gap-2 transition-all font-bold shadow-sm">
+                <ArrowLeft size={20} className="text-blue-500" /> Back
             </Link>
-            <h1 className="text-4xl font-black text-white uppercase tracking-widest flex flex-col md:flex-row items-center gap-2">
+            <h1 className="text-4xl font-black text-slate-800 uppercase tracking-tight flex flex-col md:flex-row items-center gap-2">
                 TIMELINE <span className="text-blue-500 font-mono text-xl">// {format(currentDate, 'MMM yyyy')}</span>
             </h1>
             <div className="flex gap-2">
-                <button onClick={prevMonth} className="p-3 bg-slate-800 text-white rounded-xl hover:bg-blue-600 transition"><ChevronLeft /></button>
-                <button onClick={nextMonth} className="p-3 bg-slate-800 text-white rounded-xl hover:bg-blue-600 transition"><ChevronRight /></button>
+                <button onClick={prevMonth} className="p-3 bg-white border border-slate-200 text-slate-600 rounded-xl hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm"><ChevronLeft /></button>
+                <button onClick={nextMonth} className="p-3 bg-white border border-slate-200 text-slate-600 rounded-xl hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm"><ChevronRight /></button>
             </div>
        </div>
 
        {/* CALENDAR GRID */}
-       <div className="bg-slate-900/80 backdrop-blur-md border border-white/10 rounded-3xl p-6 shadow-2xl flex-1 flex flex-col overflow-hidden">
+       <div className="bg-white/90 backdrop-blur-md border border-white shadow-xl shadow-blue-900/5 rounded-3xl p-6 flex-1 flex flex-col overflow-hidden">
             {/* Week Headers */}
-            <div className="grid grid-cols-7 mb-4 pb-2 border-b border-white/5">
+            <div className="grid grid-cols-7 mb-4 pb-2 border-b border-slate-100">
                 {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(day => (
-                    <div key={day} className="text-center text-slate-500 font-bold text-xs tracking-[0.2em]">{day}</div>
+                    <div key={day} className="text-center text-slate-400 font-bold text-xs tracking-[0.2em]">{day}</div>
                 ))}
             </div>
 
             {/* Days */}
-            <div className="grid grid-cols-7 gap-2 flex-1">
+            <div className="grid grid-cols-7 gap-3 flex-1">
                 {days.map((day) => {
                     const status = getDayStatus(day);
                     const today = isToday(day);
 
                     return (
                         <div key={day.toString()} className={`
-                            relative rounded-xl border flex flex-col items-center justify-start py-3 transition-all duration-300
-                            ${today ? 'border-blue-500/50 bg-blue-500/10' : 'border-white/5 bg-white/5'}
-                            ${status ? 'border-green-500/50 bg-green-900/20 hover:scale-105 shadow-[0_0_20px_rgba(34,197,94,0.1)]' : 'hover:bg-white/10'}
+                            relative rounded-2xl border flex flex-col items-center justify-start py-3 transition-all duration-300
+                            ${today ? 'border-blue-300 bg-blue-50 ring-2 ring-blue-100' : 'border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow-md'}
+                            ${status ? 'border-emerald-200 bg-emerald-50 hover:scale-105 shadow-sm' : ''}
                         `}>
-                            <span className={`text-lg font-bold font-mono ${today ? 'text-blue-400' : 'text-slate-400'}`}>
+                            <span className={`text-lg font-bold font-mono ${today ? 'text-blue-600' : 'text-slate-400'}`}>
                                 {format(day, 'd')}
                             </span>
 
                             {/* Status Indicator */}
                             {status && (
-                                <div className="mt-2 flex flex-col items-center animate-bounce">
-                                    <div className="bg-gradient-to-br from-yellow-400 to-orange-500 p-1.5 rounded-full shadow-lg">
-                                        <Trophy size={14} className="text-black" />
+                                <div className="mt-2 flex flex-col items-center animate-fade-in-up">
+                                    <div className="bg-white p-1.5 rounded-full shadow-md border border-emerald-100">
+                                        <Trophy size={14} className="text-emerald-500 fill-emerald-500" />
                                     </div>
-                                    <span className="text-[10px] text-green-300 font-bold uppercase mt-1 tracking-widest">
+                                    <span className="text-[10px] text-emerald-600 font-bold uppercase mt-1 tracking-widest hidden sm:block">
                                         {status.count} WINS
                                     </span>
                                 </div>
