@@ -28,7 +28,8 @@ const Landing = () => {
                 </div>
                 <h1 className="text-6xl md:text-8xl font-black text-slate-900 tracking-tight mb-8 drop-shadow-sm leading-tight">
                     GAMIFY YOUR <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-200
+">
                         PRODUCTIVITY
                     </span>
                 </h1>
