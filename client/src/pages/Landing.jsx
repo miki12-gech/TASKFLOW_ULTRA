@@ -27,12 +27,11 @@ const Landing = () => {
                     ✨ v1.0.0 Now Live
                 </div>
                 <h1 className="text-6xl md:text-8xl font-black text-slate-900 tracking-tight mb-8 drop-shadow-sm leading-tight">
-                    GAMIFY YOUR <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-200
-">
-                        PRODUCTIVITY
-                    </span>
-                </h1>
+  GAMIFY YOUR <br />
+  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">
+    PRODUCTIVITY
+  </span>
+</h1>
                 <p className="text-xl md:text-2xl text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">
                     Stop writing boring to-do lists. Turn your daily tasks into quests, earn XP, level up, and compete on the global leaderboard.
                 </p>
